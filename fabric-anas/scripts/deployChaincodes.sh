@@ -14,7 +14,7 @@ deploy_one() {
   popd >/dev/null
 }
 
-npm install
+npm ci
 npm run build
 
 deploy_one patient-registry "$ROOT_DIR/chaincodes/patient-registry"

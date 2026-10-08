@@ -11,10 +11,16 @@ function loadAbi(artifactPath) {
 
 async function createContractContext(config) {
   const provider = new ethers.JsonRpcProvider(config.rpcUrl, undefined, { staticNetwork: true });
-  // Avoid getSigner() which triggers network detection at startup; use a wallet instead.
-  const wallet = config.signerPrivateKey
-    ? new ethers.Wallet(config.signerPrivateKey, provider)
-    : new ethers.Wallet(ethers.Wallet.createRandom().privateKey, provider);
+  let wallet;
+  if (config.signerPrivateKey) {
+    wallet = new ethers.Wallet(config.signerPrivateKey, provider);
+  } else {
+    const rpcHost = new URL(config.rpcUrl).hostname;
+    if (!["127.0.0.1", "localhost", "[::1]", "hardhat"].includes(rpcHost)) {
+      throw new Error("Configure a private signer for an external RPC endpoint");
+    }
+    wallet = await provider.getSigner(config.signerIndex ?? 0);
+  }
   // NonceManager serialises nonces so rapid back-to-back writes from the single
   // API signer don't collide ("nonce has already been used").
   const signer = new ethers.NonceManager(wallet);

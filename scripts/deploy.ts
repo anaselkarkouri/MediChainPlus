@@ -1,4 +1,6 @@
 import { network } from "hardhat";
+import fs from "node:fs";
+import path from "node:path";
 
 const connection = await network.create();
 const { ethers } = connection;
@@ -32,6 +34,15 @@ async function main() {
   console.log("\nDeployment summary");
   console.log(`REIMBURSEMENT_CONTRACT_ADDRESS=${await reimbursement.getAddress()}`);
   console.log(`DRUG_TRACEABILITY_CONTRACT_ADDRESS=${await traceability.getAddress()}`);
+  if (process.env.MEDICHAIN_DEPLOYMENT_FILE) {
+    const file = process.env.MEDICHAIN_DEPLOYMENT_FILE;
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.writeFileSync(file, JSON.stringify({
+      reimbursement: await reimbursement.getAddress(),
+      drugTraceability: await traceability.getAddress(),
+      chainId: Number((await ethers.provider.getNetwork()).chainId),
+    }, null, 2));
+  }
 }
 
 main().catch((error) => {

@@ -1,7 +1,7 @@
-FROM node:20-alpine
+FROM node:24-bookworm-slim
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci --omit=dev
+RUN npm ci
 COPY . .
 RUN npx hardhat compile
 EXPOSE 8545

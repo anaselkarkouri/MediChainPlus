@@ -4,3 +4,4 @@
 *.jpg -text
 *.zip -text
 *.jar -text
+*.sh text eol=lf

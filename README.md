@@ -67,6 +67,10 @@ cd fabric-anas && npm ci && npm test && npm run build
 # Depuis frontend-react : npm run build
 ```
 
+## Démonstration Docker
+
+Après avoir créé `.env` avec votre secret JWT, `docker compose up --build --wait` démarre le nœud EVM local, déploie les contrats, lance IPFS et l’API, puis sert l’interface sur `http://127.0.0.1:8080`. Les adresses des contrats sont transmises automatiquement à l’API par un volume de déploiement ; les ports publiés restent accessibles sur le poste local. `docker compose down -v` réinitialise les données de cette démonstration.
+
 ## Rapport et équipe
 
 - [Rapport final — 36 pages](docs/Rapport_MediChainPlus.pdf)

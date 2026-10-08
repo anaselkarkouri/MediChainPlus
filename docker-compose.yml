@@ -1,5 +1,3 @@
-version: "3.9"
-
 # MediChain+ — Orchestration complète
 # Usage: docker compose up --build
 # Services: hardhat | ipfs | api | frontend
@@ -12,9 +10,9 @@ services:
       context: .
       dockerfile: docker/Dockerfile.hardhat
     ports:
-      - "8545:8545"
+      - "127.0.0.1:8545:8545"
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://localhost:8545"]
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8545',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'eth_chainId',params:[]})}).then(r=>r.json()).then(d=>{if(d.result!=='0x7a69')process.exit(1)}).catch(()=>process.exit(1))"]
       interval: 5s
       timeout: 3s
       retries: 10
@@ -28,8 +26,10 @@ services:
       dockerfile: docker/Dockerfile.hardhat
     command: ["npx", "hardhat", "run", "scripts/deploy.ts", "--network", "localhost"]
     environment:
-      - RPC_URL=http://hardhat:8545
-      - PRIVATE_KEY=${PRIVATE_KEY:-0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80}
+      - LOCAL_RPC_URL=http://hardhat:8545
+      - MEDICHAIN_DEPLOYMENT_FILE=/deployments/local.json
+    volumes:
+      - deployments:/deployments
     depends_on:
       hardhat:
         condition: service_healthy
@@ -40,8 +40,8 @@ services:
   ipfs:
     image: ipfs/kubo:v0.27.0
     ports:
-      - "5001:5001"
-      - "8082:8080"
+      - "127.0.0.1:5001:5001"
+      - "127.0.0.1:8082:8080"
     volumes:
       - ipfs_data:/data/ipfs
     environment:
@@ -60,14 +60,19 @@ services:
       context: .
       dockerfile: docker/Dockerfile.api
     ports:
-      - "3001:3001"
+      - "127.0.0.1:3001:3001"
     env_file:
       - .env
     environment:
+      - API_HOST=0.0.0.0
       - API_RPC_URL=http://hardhat:8545
+      - MEDICHAIN_DEPLOYMENT_FILE=/deployments/local.json
       - IPFS_API_URL=http://ipfs:5001
+      - IPFS_GATEWAY_URL=http://127.0.0.1:8082/ipfs
       - FABRIC_MODE=${FABRIC_MODE:-mock}
       - NODE_ENV=${NODE_ENV:-development}
+    volumes:
+      - deployments:/deployments:ro
     depends_on:
       hardhat:
         condition: service_healthy
@@ -76,7 +81,7 @@ services:
       deploy:
         condition: service_completed_successfully
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://localhost:3001/health"]
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3001/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -86,10 +91,10 @@ services:
   # ── Frontend React ────────────────────────────────────────────────────────
   frontend:
     build:
-      context: frontend-react
-      dockerfile: ../docker/Dockerfile.frontend
+      context: .
+      dockerfile: docker/Dockerfile.frontend
     ports:
-      - "8080:80"
+      - "127.0.0.1:8080:80"
     depends_on:
       api:
         condition: service_healthy
@@ -116,6 +121,7 @@ services:
       - bridge
 
 volumes:
+  deployments:
   ipfs_data:
 
 networks:

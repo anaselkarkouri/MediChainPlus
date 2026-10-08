@@ -1,4 +1,12 @@
-FROM node:20-alpine
+FROM node:24-bookworm-slim AS contracts
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY contracts/ ./contracts/
+COPY hardhat.config.ts tsconfig.json ./
+RUN npm run compile
+
+FROM node:24-bookworm-slim
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci --omit=dev
@@ -6,5 +14,6 @@ COPY api/ ./api/
 COPY data/ ./data/
 COPY scripts/importFabricIdentity.cjs ./scripts/
 COPY fabric-anas/network/ ./fabric-anas/network/
+COPY --from=contracts /app/artifacts/ ./artifacts/
 EXPOSE 3001
 CMD ["node", "api/server.cjs"]

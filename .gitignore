@@ -68,3 +68,5 @@ settings.local.php
 *.pid
 work/
 data/*.local.json
+
+deployments/

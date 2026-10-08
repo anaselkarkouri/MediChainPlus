@@ -43,3 +43,25 @@ jobs:
           cache-dependency-path: frontend-react/package-lock.json
       - run: npm ci
       - run: npm run build
+  docker-demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare fictitious local demo
+        run: |
+          python - <<'PY'
+          import pathlib, secrets
+          content = pathlib.Path('.env.example').read_text().replace('JWT_SECRET=', 'JWT_SECRET=' + secrets.token_hex(32), 1)
+          pathlib.Path('.env').write_text(content)
+          PY
+      - name: Build and start the demo
+        run: docker compose up --build --wait --wait-timeout 180
+      - name: Check frontend, contracts and a local EVM write
+        run: python scripts/smoke_docker.py
+      - name: Diagnostic logs
+        if: failure()
+        run: docker compose logs --tail 100
+      - name: Stop local demo
+        if: always()
+        run: docker compose down -v

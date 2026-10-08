@@ -1,6 +1,7 @@
 "use strict";
 
 const path = require("path");
+const fs = require("fs");
 const { buildAuthConfig } = require("./authz.cjs");
 
 require("dotenv").config({ path: path.resolve(__dirname, "..", ".env") });
@@ -50,6 +51,8 @@ function normalisePrivateKey(value) {
 }
 
 const rootDir = path.resolve(__dirname, "..");
+const deploymentFile = readEnv("MEDICHAIN_DEPLOYMENT_FILE");
+const deployments = deploymentFile ? JSON.parse(fs.readFileSync(deploymentFile, "utf8")) : {};
 const jwtSecret = readEnv("JWT_SECRET", "medichain-local-jwt-secret");
 
 const signerPrivateKeyValue = normalisePrivateKey(readEnv("API_SIGNER_PRIVATE_KEY", readEnv("PRIVATE_KEY")));
@@ -79,8 +82,8 @@ module.exports = {
   signerPrivateKey: signerPrivateKeyValue,
   signerIndex: readNumberEnv("API_SIGNER_INDEX", 0),
   demoAddress,
-  reimbursementAddress: readEnv("REIMBURSEMENT_CONTRACT_ADDRESS"),
-  drugTraceabilityAddress: readEnv("DRUG_TRACEABILITY_CONTRACT_ADDRESS"),
+  reimbursementAddress: readEnv("REIMBURSEMENT_CONTRACT_ADDRESS", deployments.reimbursement || ""),
+  drugTraceabilityAddress: readEnv("DRUG_TRACEABILITY_CONTRACT_ADDRESS", deployments.drugTraceability || ""),
   auth: buildAuthConfig(process.env),
   security: {
     jsonLimit: readLimitEnv("API_JSON_LIMIT", "5mb"),
