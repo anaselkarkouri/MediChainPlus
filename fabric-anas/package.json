@@ -1,0 +1,24 @@
+{
+  "name": "medichain-fabric-anas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MediChain+ Fabric chaincodes and IPFS module by Anas El Karkouri",
+  "scripts": {
+    "build": "npm run build -w chaincodes/patient-registry && npm run build -w chaincodes/medical-record && npm run build -w chaincodes/prescription && npm run build -w ipfs-module",
+    "test": "npm run test -w chaincodes/patient-registry && npm run test -w chaincodes/medical-record && npm run test -w chaincodes/prescription",
+    "clean": "rm -rf chaincodes/*/dist ipfs-module/dist"
+  },
+  "workspaces": [
+    "chaincodes/patient-registry",
+    "chaincodes/medical-record",
+    "chaincodes/prescription",
+    "ipfs-module"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "overrides": {
+    "js-yaml": "^4.1.1",
+    "handlebars": "^4.7.10"
+  }
+}

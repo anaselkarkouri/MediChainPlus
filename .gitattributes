@@ -1,0 +1,6 @@
+* text=auto
+*.pdf -text
+*.png -text
+*.jpg -text
+*.zip -text
+*.jar -text

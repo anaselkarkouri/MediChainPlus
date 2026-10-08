@@ -1,0 +1,84 @@
+<svg width="760" height="520" viewBox="0 0 760 520" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Visualisation blockchain securisee</title>
+  <desc id="desc">Blocs de donnees connectes, bouclier de securite et cadenas pour representer une blockchain medicale protegee.</desc>
+  <rect width="760" height="520" rx="36" fill="white"/>
+  <rect x="1" y="1" width="758" height="518" rx="35" stroke="#E5E7EB" stroke-width="2"/>
+  <g opacity="0.86">
+    <path d="M82 84H708" stroke="#E5E7EB" stroke-width="2"/>
+    <path d="M82 164H708" stroke="#E5E7EB" stroke-width="2"/>
+    <path d="M82 244H708" stroke="#E5E7EB" stroke-width="2"/>
+    <path d="M82 324H708" stroke="#E5E7EB" stroke-width="2"/>
+    <path d="M82 404H708" stroke="#E5E7EB" stroke-width="2"/>
+    <path d="M122 44V474" stroke="#E5E7EB" stroke-width="2"/>
+    <path d="M230 44V474" stroke="#E5E7EB" stroke-width="2"/>
+    <path d="M338 44V474" stroke="#E5E7EB" stroke-width="2"/>
+    <path d="M446 44V474" stroke="#E5E7EB" stroke-width="2"/>
+    <path d="M554 44V474" stroke="#E5E7EB" stroke-width="2"/>
+    <path d="M662 44V474" stroke="#E5E7EB" stroke-width="2"/>
+  </g>
+  <circle cx="134" cy="130" r="8" fill="#10B981"/>
+  <circle cx="282" cy="92" r="8" fill="#2563EB"/>
+  <circle cx="466" cy="132" r="8" fill="#9333EA"/>
+  <circle cx="606" cy="92" r="8" fill="#EC4899"/>
+  <circle cx="628" cy="328" r="8" fill="#10B981"/>
+  <path d="M142 130L274 94M290 94L458 130M474 130L598 94M470 140L620 320" stroke="#A1A1AA" stroke-width="4" stroke-linecap="round"/>
+  <g filter="url(#shadow)">
+    <rect x="92" y="172" width="148" height="116" rx="18" fill="#ECFDF5"/>
+    <rect x="114" y="200" width="56" height="14" rx="7" fill="#10B981"/>
+    <rect x="114" y="230" width="94" height="12" rx="6" fill="#A7F3D0"/>
+    <rect x="114" y="254" width="70" height="12" rx="6" fill="#A7F3D0"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="252" y="130" width="150" height="118" rx="18" fill="#EFF6FF"/>
+    <rect x="274" y="158" width="58" height="14" rx="7" fill="#2563EB"/>
+    <rect x="274" y="188" width="98" height="12" rx="6" fill="#BFDBFE"/>
+    <rect x="274" y="212" width="74" height="12" rx="6" fill="#BFDBFE"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="426" y="172" width="150" height="116" rx="18" fill="#FAF5FF"/>
+    <rect x="448" y="200" width="58" height="14" rx="7" fill="#9333EA"/>
+    <rect x="448" y="230" width="94" height="12" rx="6" fill="#E9D5FF"/>
+    <rect x="448" y="254" width="70" height="12" rx="6" fill="#E9D5FF"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="548" y="288" width="126" height="96" rx="18" fill="#FDF2F8"/>
+    <rect x="570" y="314" width="50" height="12" rx="6" fill="#EC4899"/>
+    <rect x="570" y="340" width="76" height="10" rx="5" fill="#FBCFE8"/>
+    <rect x="570" y="362" width="56" height="10" rx="5" fill="#FBCFE8"/>
+  </g>
+  <g filter="url(#shieldShadow)">
+    <path d="M330 302C330 281.565 349.75 269.311 382.221 259.018C390.023 256.544 398.352 256.544 406.154 259.018C438.625 269.311 458.375 281.565 458.375 302V349.5C458.375 401.419 410.581 427.226 397.019 433.481C395.244 434.3 393.131 434.3 391.356 433.481C377.794 427.226 330 401.419 330 349.5V302Z" fill="#059669"/>
+    <path d="M352 310.465C352 296.698 365.811 288.138 388.557 280.973C392.189 279.829 396.186 279.829 399.818 280.973C422.564 288.138 436.375 296.698 436.375 310.465V348.03C436.375 386.986 402.262 407.737 394.188 412C386.113 407.737 352 386.986 352 348.03V310.465Z" fill="#ECFDF5" fill-opacity="0.96"/>
+    <rect x="374" y="342" width="40" height="40" rx="10" fill="#059669"/>
+    <path d="M382 342V328C382 321.373 387.373 316 394 316C400.627 316 406 321.373 406 328V342" stroke="#059669" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="394" cy="362" r="5" fill="white"/>
+    <path d="M394 366V374" stroke="white" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <g opacity="0.9">
+    <rect x="118" y="366" width="164" height="46" rx="23" fill="#F4F4F5"/>
+    <circle cx="144" cy="389" r="7" fill="#10B981"/>
+    <rect x="164" y="381" width="88" height="10" rx="5" fill="#A1A1AA"/>
+  </g>
+  <defs>
+    <filter id="shadow" x="70" y="108" width="626" height="298" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="8"/>
+      <feGaussianBlur stdDeviation="11"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.094 0 0 0 0 0.094 0 0 0 0 0.106 0 0 0 0.11 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+    </filter>
+    <filter id="shieldShadow" x="304" y="234" width="180" height="226" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="10"/>
+      <feGaussianBlur stdDeviation="13"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.021 0 0 0 0 0.588 0 0 0 0 0.412 0 0 0 0.22 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+    </filter>
+  </defs>
+</svg>

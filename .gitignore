@@ -1,0 +1,70 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+fabric-anas/node_modules/
+**/node_modules/
+
+# Build outputs
+artifacts/
+cache/
+coverage/
+coverage.json
+gas-report.txt
+dist/
+**/dist/
+
+# Fabric runtime
+wallet/
+fabric-anas/wallet/
+fabric-anas/network/organizations/
+fabric-anas/network/system-genesis-block/
+fabric-anas/network/channel-artifacts/
+data/*.local.json
+
+# Logs and OS files
+*.log
+*.pid
+.DS_Store
+Thumbs.db
+
+# Local archives / temporary bundles
+files.zip
+*.zip
+
+# IPFS local node (contient clés privées et données locales)
+.ipfs/
+
+# Binaires tiers (Kubo IPFS, etc.)
+tools/
+
+# Screenshots locaux
+frontend/image.png
+
+
+.env
+.env.*
+!.env.example
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+.gradle/
+build/
+dist/
+artifacts/
+cache/
+local.properties
+google-services.json
+*.jks
+*.keystore
+wallet/
+crypto-config/
+settings.local.php
+*.log
+*.pid
+work/
+data/*.local.json

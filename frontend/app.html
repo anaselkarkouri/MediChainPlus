@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MediChain+ — Portails</title>
+  <meta name="description" content="MediChain+ — portails patient, médecin, pharmacie et assureur connectés à l'API blockchain." />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#145aff" />
+  <script>
+    (function () {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.getRegistrations()
+          .then(function (regs) { return Promise.all(regs.map(function (r) { return r.unregister(); })); })
+          .catch(function () {});
+      }
+      if ("caches" in window) {
+        caches.keys()
+          .then(function (keys) { return Promise.all(keys.map(function (k) { return caches.delete(k); })); })
+          .catch(function () {});
+      }
+      var t = localStorage.getItem("mc_theme");
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="MediChain+ accueil">
+        <span class="brand-mark">M+</span>
+        <span>
+          <strong>MediChain+</strong>
+          <small>Blockchain de santé numérique</small>
+        </span>
+      </a>
+
+      <div class="top-actions">
+        <label class="api-field">
+          <span>API</span>
+          <input id="apiBase" type="text" placeholder="same-origin (proxy /api → :3001)" autocomplete="off" />
+        </label>
+        <button id="refreshStatusBtn" class="btn secondary" type="button">Vérifier</button>
+        <button id="connectWalletBtn" class="btn primary" type="button">Connecter wallet</button>
+        <button class="theme-btn" id="themeBtn" title="Basculer le thème" type="button">
+          <span class="theme-icon-light">🌙</span>
+          <span class="theme-icon-dark">☀️</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="status-band" aria-label="Statut de la plateforme">
+        <div>
+          <p class="eyebrow">Plateforme</p>
+          <h1>Portails MediChain+</h1>
+          <p class="lead">Patient, médecin, pharmacie et assureur — connectés à l'API Gateway du projet.</p>
+        </div>
+        <div class="status-grid">
+          <div class="metric"><span>Backend</span><strong id="backendStatus">-</strong></div>
+          <div class="metric"><span>Fabric</span><strong id="fabricStatus">-</strong></div>
+          <div class="metric"><span>EVM</span><strong id="evmStatus">-</strong></div>
+          <div class="metric"><span>IPFS</span><strong id="ipfsStatus">-</strong></div>
+        </div>
+      </section>
+
+      <section class="auth-panel" aria-label="Authentification">
+        <div>
+          <p class="eyebrow">Identite</p>
+          <h2>Authentification wallet</h2>
+        </div>
+        <div class="auth-state">
+          <span id="walletState">Non connecte</span>
+          <button id="logoutBtn" class="btn ghost" type="button">Deconnexion</button>
+        </div>
+      </section>
+
+      <nav class="role-tabs" aria-label="Portails utilisateur">
+        <button class="role-tab active" type="button" data-role="patient">Patient</button>
+        <button class="role-tab" type="button" data-role="doctor">Medecin</button>
+        <button class="role-tab" type="button" data-role="pharmacy">Pharmacie</button>
+        <button class="role-tab" type="button" data-role="insurer">Assureur</button>
+      </nav>
+
+      <section class="role-panel active" id="role-patient" data-role-panel="patient">
+        <div class="section-head">
+          <p class="eyebrow">Portail patient</p>
+          <h2>Dossier, consentements et remboursement</h2>
+        </div>
+
+        <div class="grid two">
+          <form class="panel" data-action="patient-read">
+            <h3>Consultation patient</h3>
+            <label>Patient ID<input id="patientId" value="PAT-001" /></label>
+            <div class="actions">
+              <button type="button" class="btn secondary" data-run="get-patient">Dossier patient</button>
+              <button type="button" class="btn secondary" data-run="patient-consents">Consentements</button>
+              <button type="button" class="btn secondary" data-run="patient-records">Dossiers medicaux</button>
+              <button type="button" class="btn secondary" data-run="patient-prescriptions">Prescriptions</button>
+            </div>
+          </form>
+
+          <form class="panel" data-action="patient-consent">
+            <h3>Gestion des consentements</h3>
+            <label>Beneficiaire<input id="consentGrantee" value="DOC-007" /></label>
+            <label>Scope<input id="consentScope" value="medical-record:read" /></label>
+            <label>Expiration<input id="consentExpires" value="2026-12-31T23:59:59Z" /></label>
+            <label>Consent ID<input id="consentId" placeholder="CONS-..." /></label>
+            <div class="actions">
+              <button type="button" class="btn primary" data-run="grant-consent">Autoriser</button>
+              <button type="button" class="btn danger" data-run="revoke-consent">Revoquer</button>
+            </div>
+          </form>
+
+          <form class="panel wide" data-action="patient-claim">
+            <h3>Demande de remboursement</h3>
+            <div class="fields three">
+              <label>Montant ETH<input id="claimAmountEth" value="0.01" /></label>
+              <label>Record ID<input id="claimRecordId" placeholder="REC-001" /></label>
+              <label>Hash attendu<input id="claimExpectedHash" placeholder="sha256..." /></label>
+            </div>
+            <div class="actions">
+              <button type="button" class="btn secondary" data-run="claim-tx">Preparer transaction</button>
+              <button type="button" class="btn primary" data-run="submit-claim">Soumettre</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="role-panel" id="role-doctor" data-role-panel="doctor">
+        <div class="section-head">
+          <p class="eyebrow">Portail medecin</p>
+          <h2>Dossiers medicaux et prescriptions</h2>
+        </div>
+
+        <div class="grid two">
+          <form class="panel" data-action="doctor-record">
+            <h3>Creer un dossier medical</h3>
+            <textarea id="recordPayload" rows="11">{
+  "recordId": "REC-001",
+  "patientId": "PAT-001",
+  "doctorId": "DOC-007",
+  "recordType": "consultation",
+  "ipfsCid": "QmExample",
+  "fileHashSHA256": "abcd1234",
+  "encryptionMetadata": { "alg": "AES-256-GCM" },
+  "createdAt": "2026-05-13T09:00:00Z"
+}</textarea>
+            <button type="button" class="btn primary" data-run="create-record">Creer dossier</button>
+          </form>
+
+          <form class="panel" data-action="doctor-prescription">
+            <h3>Creer une prescription</h3>
+            <textarea id="rxPayload" rows="11">{
+  "prescriptionId": "RX-001",
+  "patientId": "PAT-001",
+  "doctorId": "DOC-007",
+  "issuedAt": "2026-05-13T09:00:00Z",
+  "validUntil": "2026-06-13T00:00:00Z",
+  "medications": [
+    { "code": "DCI-12345", "name": "Paracetamol 500mg", "dosage": "1 cp 3x/j" }
+  ],
+  "signatureHash": "abcd1234"
+}</textarea>
+            <button type="button" class="btn primary" data-run="create-rx">Creer prescription</button>
+          </form>
+
+          <form class="panel wide" data-action="doctor-search">
+            <h3>Consultation medicale</h3>
+            <div class="fields four">
+              <label>Patient ID<input id="doctorPatientId" value="PAT-001" /></label>
+              <label>Doctor ID<input id="doctorId" value="DOC-007" /></label>
+              <label>Record ID<input id="recordId" value="REC-001" /></label>
+              <label>Hash attendu<input id="recordExpectedHash" value="abcd1234" /></label>
+            </div>
+            <div class="actions">
+              <button type="button" class="btn secondary" data-run="records-by-patient">Par patient</button>
+              <button type="button" class="btn secondary" data-run="records-by-doctor">Par medecin</button>
+              <button type="button" class="btn secondary" data-run="record-history">Historique dossier</button>
+              <button type="button" class="btn secondary" data-run="verify-record">Verifier integrite</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="role-panel" id="role-pharmacy" data-role-panel="pharmacy">
+        <div class="section-head">
+          <p class="eyebrow">Portail pharmacie</p>
+          <h2>Verification prescription et medicament</h2>
+        </div>
+
+        <div class="grid two">
+          <form class="panel" data-action="pharmacy-drug">
+            <h3>Traçabilite medicament</h3>
+            <label>Code QR ou Batch ID<input id="batchId" value="BATCH-001" /></label>
+            <label>Nouveau statut<input id="drugStatusInput" value="At pharmacy" /></label>
+            <div class="actions">
+              <button type="button" class="btn secondary" data-run="verify-drug">Verifier produit</button>
+              <button type="button" class="btn secondary" data-run="drug-history">Historique</button>
+              <button type="button" class="btn primary" data-run="update-drug">Mettre a jour statut</button>
+            </div>
+          </form>
+
+          <form class="panel" data-action="pharmacy-rx">
+            <h3>Prescription</h3>
+            <label>Prescription ID<input id="pharmacyRxId" value="RX-001" /></label>
+            <label>Pharmacy ID<input id="pharmacyId" value="PHARMA-001" /></label>
+            <label>Hash signature attendu<input id="pharmacyExpectedSig" value="abcd1234" /></label>
+            <div class="actions">
+              <button type="button" class="btn secondary" data-run="get-rx">Lire prescription</button>
+              <button type="button" class="btn secondary" data-run="verify-rx">Verifier signature</button>
+              <button type="button" class="btn primary" data-run="dispense-rx">Dispenser</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="role-panel" id="role-insurer" data-role-panel="insurer">
+        <div class="section-head">
+          <p class="eyebrow">Portail assureur</p>
+          <h2>Suivi et validation des remboursements</h2>
+        </div>
+
+        <div class="grid two">
+          <form class="panel" data-action="insurer-claim">
+            <h3>Reclamation</h3>
+            <label>Claim ID<input id="claimId" value="0" /></label>
+            <div class="actions">
+              <button type="button" class="btn secondary" data-run="get-claim">Lire</button>
+              <button type="button" class="btn primary" data-run="validate-claim">Valider</button>
+              <button type="button" class="btn primary" data-run="pay-claim">Payer</button>
+            </div>
+          </form>
+
+          <form class="panel" data-action="insurer-treasury">
+            <h3>Contrat de remboursement</h3>
+            <label>Montant a approvisionner ETH<input id="fundEth" value="0.1" /></label>
+            <div class="actions">
+              <button type="button" class="btn secondary" data-run="reim-balance">Solde</button>
+              <button type="button" class="btn secondary" data-run="claims-count">Nombre de claims</button>
+              <button type="button" class="btn primary" data-run="fund-contract">Approvisionner</button>
+            </div>
+          </form>
+
+          <form class="panel wide" data-action="insurer-events">
+            <h3>Evenements on-chain</h3>
+            <div class="actions">
+              <button type="button" class="btn secondary" data-run="claim-submitted-events">ClaimSubmitted</button>
+              <button type="button" class="btn secondary" data-run="claim-approved-events">ClaimApproved</button>
+              <button type="button" class="btn secondary" data-run="payment-events">PaymentExecuted</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="response-panel" aria-label="Resultat API">
+        <div class="response-head">
+          <h2>Resultat API</h2>
+          <button id="clearOutputBtn" class="btn ghost" type="button">Effacer</button>
+        </div>
+        <pre id="output">{}</pre>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast-root" aria-live="polite"></div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

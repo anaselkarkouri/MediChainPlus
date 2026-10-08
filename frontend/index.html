@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MediChain+ — Plateforme blockchain santé</title>
+  <meta name="description" content="MediChain+ — plateforme blockchain hybride pour la santé numérique : Hyperledger Fabric, Polygon EVM, IPFS." />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#145aff" />
+  <script>
+    /* Purge anciens Service Workers et caches pour éviter tout blocage */
+    (function () {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.getRegistrations()
+          .then(function (regs) { return Promise.all(regs.map(function (r) { return r.unregister(); })); })
+          .catch(function () {});
+      }
+      if ("caches" in window) {
+        caches.keys()
+          .then(function (keys) { return Promise.all(keys.map(function (k) { return caches.delete(k); })); })
+          .catch(function () {});
+      }
+      /* Restaurer le thème avant le premier rendu */
+      var t = localStorage.getItem("mc_theme");
+      if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="landing">
+    <header class="landing-nav">
+      <a class="brand" href="index.html" aria-label="MediChain+ accueil">
+        <span class="brand-mark">M+</span>
+        <span>
+          <strong>MediChain+</strong>
+          <small>EMSI 2025 / 2026</small>
+        </span>
+      </a>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="theme-btn" id="themeBtn" title="Basculer le thème" type="button">
+          <span class="theme-icon-light">🌙</span>
+          <span class="theme-icon-dark">☀️</span>
+        </button>
+        <a class="btn primary" href="app.html">Ouvrir les portails →</a>
+      </div>
+    </header>
+
+    <main class="landing-main">
+
+      <!-- Hero -->
+      <section class="landing-hero">
+        <div>
+          <p class="eyebrow">Projet universitaire · EMSI 2025 / 2026</p>
+          <h1>Une infrastructure blockchain hybride pour la santé numérique</h1>
+          <p class="lead">
+            MediChain+ unifie Hyperledger Fabric, Polygon EVM et IPFS derrière une seule API Gateway
+            pour sécuriser les dossiers médicaux, automatiser les remboursements et tracer les médicaments.
+          </p>
+          <div class="hero-cta">
+            <a class="btn primary" href="app.html">Lancer la démo →</a>
+            <a class="btn secondary" href="#equipe">Voir l'équipe</a>
+          </div>
+        </div>
+        <figure class="hero-visual" aria-hidden="true">
+          <img src="assets/blockchain-security.svg" alt="" />
+        </figure>
+      </section>
+
+      <!-- Architecture -->
+      <section class="landing-section">
+        <div class="section-head">
+          <p class="eyebrow">Architecture</p>
+          <h2>Trois couches technologiques</h2>
+        </div>
+        <div class="architecture-list">
+          <div><strong>Hyperledger Fabric</strong><span>Patients, consentements, dossiers médicaux, prescriptions — chaincodes Go sur réseau 1-org / 2-peers.</span></div>
+          <div><strong>Polygon EVM</strong><span>Smart contracts Solidity pour les remboursements automatisés et la traçabilité des médicaments (batch ID).</span></div>
+          <div><strong>IPFS</strong><span>Stockage distribué des fichiers médicaux chiffrés AES-256-GCM — CID stocké sur Fabric.</span></div>
+          <div><strong>API Gateway</strong><span>Express.js qui orchestre Fabric + EVM + IPFS, auth wallet challenge/signature, JWT.</span></div>
+          <div><strong>Frontend</strong><span>Application web multi-portails (patient, médecin, pharmacie, assureur) sans dépendance npm côté client.</span></div>
+        </div>
+      </section>
+
+      <!-- Fonctionnalités -->
+      <section class="landing-section">
+        <div class="section-head">
+          <p class="eyebrow">Exigences F1 – F6</p>
+          <h2>Périmètre fonctionnel</h2>
+        </div>
+        <div class="requirements">
+          <div><strong>F1</strong><span>Le patient consulte son dossier et gère ses consentements.</span></div>
+          <div><strong>F2</strong><span>Le médecin crée, consulte et signe les dossiers médicaux autorisés.</span></div>
+          <div><strong>F3</strong><span>La pharmacie vérifie un médicament via batch ID / QR code et son historique on-chain.</span></div>
+          <div><strong>F4</strong><span>L'assureur suit, valide et paie les remboursements via smart contract.</span></div>
+          <div><strong>F5</strong><span>Authentification wallet (MetaMask) avec challenge/signature et JWT.</span></div>
+          <div><strong>F6</strong><span>L'API Gateway orchestre tous les échanges entre les trois couches.</span></div>
+        </div>
+      </section>
+
+      <!-- Portails -->
+      <section class="landing-section">
+        <div class="section-head">
+          <p class="eyebrow">Livrables frontend</p>
+          <h2>Quatre portails utilisateur</h2>
+        </div>
+        <div class="portal-list">
+          <article>
+            <h3>Patient</h3>
+            <p>Consultation du dossier, gestion des consentements, suivi des prescriptions et remboursements.</p>
+          </article>
+          <article>
+            <h3>Médecin</h3>
+            <p>Création et consultation des dossiers médicaux, prescriptions, vérification d'intégrité IPFS.</p>
+          </article>
+          <article>
+            <h3>Pharmacie</h3>
+            <p>Lecture et dispensation de prescription, vérification et mise à jour du statut du médicament.</p>
+          </article>
+          <article>
+            <h3>Assureur</h3>
+            <p>Validation on-chain des réclamations, paiement automatisé, suivi des événements EVM.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Critères de réussite -->
+      <section class="landing-section">
+        <div class="section-head">
+          <p class="eyebrow">Démonstration attendue</p>
+          <h2>Critères de réussite</h2>
+        </div>
+        <ul class="success-list">
+          <li>Flux complet patient → médecin → pharmacie → assureur exploitable en soutenance.</li>
+          <li>Dossiers médicaux sécurisés — fichiers sensibles stockés hors chaîne sur IPFS chiffré.</li>
+          <li>Remboursement soumis, validé et payé par smart contract Solidity.</li>
+          <li>Traçabilité médicament vérifiable par batch ID pendant la démonstration.</li>
+          <li>Interfaces sobres, lisibles, adaptées à chaque rôle et fonctionnelles sans MetaMask pour la lecture.</li>
+        </ul>
+      </section>
+
+      <!-- Équipe -->
+      <section class="landing-section" id="equipe">
+        <div class="section-head">
+          <p class="eyebrow">Équipe</p>
+          <h2>Cinq rôles, une même mission.</h2>
+        </div>
+
+        <div class="team-grid">
+          <!-- Ilyas Ajelyan -->
+          <div class="card">
+            <div class="member">
+              <div class="avatar" style="background:linear-gradient(135deg,#8b5cf6,#3b82f6)">IA</div>
+              <div>
+                <div class="member-name">Ilyas Ajelyan</div>
+                <div class="member-role">Chef de projet &amp; smart contracts</div>
+              </div>
+            </div>
+            <div class="divider"></div>
+            <p class="role-secondary">Secondaire : support déploiement &amp; intégration</p>
+            <div class="role-cols">
+              <div>
+                <div class="role-h">Responsabilités</div>
+                <ul class="role-ul">
+                  <li>Piloter le projet et les sprints</li>
+                  <li>Définir l'architecture globale</li>
+                  <li>Développer les smart contracts Solidity</li>
+                  <li>Coordonner la démonstration finale</li>
+                </ul>
+              </div>
+              <div>
+                <div class="role-h">Livrables</div>
+                <ul class="role-ul">
+                  <li>Contrats intelligents</li>
+                  <li>Scripts de déploiement</li>
+                  <li>Comptes rendus de sprint</li>
+                  <li>Scénario de démonstration</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Anas El Karkouri -->
+          <div class="card">
+            <div class="member">
+              <div class="avatar" style="background:linear-gradient(135deg,#059669,#0284c7)">AE</div>
+              <div>
+                <div class="member-name">Anas El Karkouri</div>
+                <div class="member-role">Développeur Hyperledger Fabric</div>
+              </div>
+            </div>
+            <div class="divider"></div>
+            <p class="role-secondary">Secondaire : ingénieur intégration IPFS</p>
+            <div class="role-cols">
+              <div>
+                <div class="role-h">Responsabilités</div>
+                <ul class="role-ul">
+                  <li>Mettre en place le réseau Fabric</li>
+                  <li>Développer les chaincodes Go</li>
+                  <li>Configurer l'intégration IPFS</li>
+                  <li>Garantir l'intégrité des dossiers</li>
+                </ul>
+              </div>
+              <div>
+                <div class="role-h">Livrables</div>
+                <ul class="role-ul">
+                  <li>Réseau Fabric opérationnel</li>
+                  <li>3 chaincodes métier</li>
+                  <li>Module IPFS chiffré</li>
+                  <li>Jeux de tests chaincode</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Omar Gaga -->
+          <div class="card">
+            <div class="member">
+              <div class="avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">OG</div>
+              <div>
+                <div class="member-name">Omar Gaga</div>
+                <div class="member-role">Backend &amp; architecte identité</div>
+              </div>
+            </div>
+            <div class="divider"></div>
+            <p class="role-secondary">Secondaire : ingénieur bridge Fabric-Ethereum</p>
+            <div class="role-cols">
+              <div>
+                <div class="role-h">Responsabilités</div>
+                <ul class="role-ul">
+                  <li>Construire l'API Gateway</li>
+                  <li>Gérer le système DID/SSI</li>
+                  <li>Développer le bridge inter-chaînes</li>
+                  <li>Auth &amp; intégrations Oracle</li>
+                </ul>
+              </div>
+              <div>
+                <div class="role-h">Livrables</div>
+                <ul class="role-ul">
+                  <li>API Gateway documentée</li>
+                  <li>Système DID/SSI</li>
+                  <li>Bridge F-E</li>
+                  <li>Collection Postman</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Omar Babba (moi) -->
+          <div class="card me">
+            <div class="member">
+              <div class="avatar" style="background:linear-gradient(135deg,#059669,#2563eb)">OB</div>
+              <div>
+                <div class="member-name">Omar Babba <span class="badge">Front-end</span></div>
+                <div class="member-role">Développeur frontend full-stack</div>
+              </div>
+            </div>
+            <div class="divider"></div>
+            <p class="role-secondary">Secondaire : UX designer &amp; intégration MetaMask</p>
+            <div class="role-cols">
+              <div>
+                <div class="role-h">Responsabilités</div>
+                <ul class="role-ul">
+                  <li>Concevoir les wireframes</li>
+                  <li>Développer les 4 portails</li>
+                  <li>Cohérence visuelle (dark mode)</li>
+                  <li>Connecter l'API Gateway &amp; wallet</li>
+                </ul>
+              </div>
+              <div>
+                <div class="role-h">Livrables</div>
+                <ul class="role-ul">
+                  <li>Portail patient</li>
+                  <li>Portail médecin</li>
+                  <li>Portail pharmacie</li>
+                  <li>Portail assureur</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Amin Er-Rebbat -->
+          <div class="card">
+            <div class="member">
+              <div class="avatar" style="background:linear-gradient(135deg,#10b981,#0ea5e9)">AR</div>
+              <div>
+                <div class="member-name">Amin Er-Rebbat</div>
+                <div class="member-role">Ingénieur sécurité &amp; DevOps</div>
+              </div>
+            </div>
+            <div class="divider"></div>
+            <p class="role-secondary">Secondaire : rédacteur technique &amp; QA lead</p>
+            <div class="role-cols">
+              <div>
+                <div class="role-h">Responsabilités</div>
+                <ul class="role-ul">
+                  <li>Conteneuriser la solution</li>
+                  <li>Mettre en place la CI/CD</li>
+                  <li>Conduire l'audit de sécurité</li>
+                  <li>Piloter les tests d'intégration</li>
+                </ul>
+              </div>
+              <div>
+                <div class="role-h">Livrables</div>
+                <ul class="role-ul">
+                  <li>Docker Compose</li>
+                  <li>Pipeline GitHub Actions</li>
+                  <li>Rapport d'audit</li>
+                  <li>Rapport technique final</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      MediChain+ · Projet universitaire blockchain &amp; santé · EMSI 2025/2026
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var btn = document.getElementById("themeBtn");
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        var isDark = document.documentElement.getAttribute("data-theme") === "dark";
+        if (isDark) {
+          document.documentElement.removeAttribute("data-theme");
+          localStorage.setItem("mc_theme", "light");
+        } else {
+          document.documentElement.setAttribute("data-theme", "dark");
+          localStorage.setItem("mc_theme", "dark");
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

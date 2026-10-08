@@ -1,0 +1,11 @@
+{
+  "index": {
+    "fields": [
+      "objectType",
+      "prescriptionId"
+    ]
+  },
+  "ddoc": "indexPrescriptionIdDoc",
+  "name": "indexPrescriptionId",
+  "type": "json"
+}

@@ -1,0 +1,148 @@
+{
+  "patients": {
+    "PAT-20260511220527": {
+      "objectType": "patient",
+      "allergies": [
+        "penicillin"
+      ],
+      "consentReferences": [],
+      "encryptedName": "base64:aes-gcm-ciphertext",
+      "walletAddress": "0x1111111111111111111111111111111111111111",
+      "did": "did:ethr:0x1111111111111111111111111111111111111111",
+      "birthYear": 2001,
+      "gender": "MALE",
+      "bloodType": "O+",
+      "patientId": "PAT-20260511220527",
+      "emergencyContactHash": "sha256:test-emergency",
+      "nationalIdHash": "sha256:test-national-id",
+      "status": "ACTIVE",
+      "createdAt": "2026-05-11T21:05:27.480Z",
+      "updatedAt": "2026-05-11T21:05:27.480Z",
+      "createdBy": "appUser"
+    },
+    "PAT-001": {
+      "objectType": "patient",
+      "allergies": [],
+      "consentReferences": [],
+      "patientId": "PAT-001",
+      "name": "Jean Dupont",
+      "dateOfBirth": "1985-03-15",
+      "walletAddress": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "did": "did:medichain:PAT-001",
+      "status": "ACTIVE",
+      "createdAt": "2026-05-18T10:20:31.416Z",
+      "updatedAt": "2026-05-18T10:20:31.416Z",
+      "createdBy": "appUser"
+    }
+  },
+  "medicalRecords": {
+    "REC-20260511220527": {
+      "objectType": "medicalRecord",
+      "recordType": "CONSULTATION",
+      "encryptionAlgorithm": "AES-256-GCM",
+      "fileHashSHA256": "hash123",
+      "title": "General consultation",
+      "recordId": "REC-20260511220527",
+      "doctorId": "DOC-001",
+      "patientId": "PAT-20260511220527",
+      "ipfsCid": "bafybeigdyrzt",
+      "accessPolicy": {
+        "patientId": "PAT-20260511220527",
+        "allowedDoctorIds": [
+          "DOC-001"
+        ],
+        "allowedInsurerIds": [
+          "INS-001"
+        ]
+      },
+      "status": "ACTIVE",
+      "claimReferences": [
+        {
+          "claimId": "1",
+          "reimbursementContractAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+          "patientWallet": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "amountWei": "100000000000000000",
+          "txHash": "0x65e909907949b6e7816f56e2b07a9569fefe7ac74b63f908792079d3055a4fe3",
+          "linkedAt": "2026-05-11T21:05:27.606Z",
+          "linkedBy": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+        }
+      ],
+      "createdAt": "2026-05-11T21:05:27.491Z",
+      "updatedAt": "2026-05-11T21:05:27.606Z",
+      "createdBy": "appUser"
+    },
+    "REC-001": {
+      "objectType": "medicalRecord",
+      "recordId": "REC-001",
+      "patientId": "PAT-001",
+      "doctorId": "DOC-007",
+      "recordType": "consultation",
+      "ipfsCid": "QmExample123",
+      "fileHashSHA256": "abcd1234",
+      "encryptionMetadata": {
+        "alg": "AES-256-GCM"
+      },
+      "createdAt": "2026-05-18T10:20:31.531Z",
+      "status": "ACTIVE",
+      "claimReferences": [
+        {
+          "claimId": "0",
+          "reimbursementContractAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+          "patientWallet": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "amountWei": "10000000000000000",
+          "txHash": "0x796ecfcd02a7cfebeb7dc52b184a9d00ea124a84cdd61016210b993c8541134e",
+          "linkedAt": "2026-05-18T10:20:31.609Z",
+          "linkedBy": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+        }
+      ],
+      "updatedAt": "2026-05-18T10:20:31.609Z",
+      "createdBy": "appUser"
+    }
+  },
+  "prescriptions": {
+    "RX-20260511220527": {
+      "objectType": "prescription",
+      "signatureHash": "sha256:doctor-signature",
+      "expiresAt": "2026-06-11T18:00:00Z",
+      "issuedAt": "2026-05-11T18:00:00Z",
+      "prescriptionId": "RX-20260511220527",
+      "doctorId": "DOC-001",
+      "medications": [
+        {
+          "instructions": "After meals",
+          "batchId": "BATCH-20260511220527",
+          "dosage": "500mg",
+          "drugName": "Amoxicillin 500mg",
+          "frequency": "3 times/day",
+          "duration": "7 days"
+        }
+      ],
+      "reasonHash": "sha256:reason",
+      "patientId": "PAT-20260511220527",
+      "status": "ACTIVE",
+      "createdAt": "2026-05-11T21:05:27.499Z",
+      "updatedAt": "2026-05-11T21:05:27.499Z",
+      "createdBy": "appUser"
+    },
+    "RX-001": {
+      "objectType": "prescription",
+      "prescriptionId": "RX-001",
+      "patientId": "PAT-001",
+      "doctorId": "DOC-007",
+      "issuedAt": "2026-05-18T10:00:00Z",
+      "validUntil": "2026-06-18T00:00:00Z",
+      "medications": [
+        {
+          "code": "DCI-123",
+          "name": "Paracetamol 500mg",
+          "dosage": "1cp 3x/j"
+        }
+      ],
+      "signatureHash": "abcd1234",
+      "status": "ACTIVE",
+      "createdAt": "2026-05-18T10:20:31.533Z",
+      "updatedAt": "2026-05-18T10:20:31.533Z",
+      "createdBy": "appUser"
+    }
+  }
+}

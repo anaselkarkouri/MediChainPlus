@@ -1,0 +1,11 @@
+{
+  "index": {
+    "fields": [
+      "objectType",
+      "recordType"
+    ]
+  },
+  "ddoc": "indexRecordTypeDoc",
+  "name": "indexRecordType",
+  "type": "json"
+}
